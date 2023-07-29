@@ -59,6 +59,11 @@ public class Carrera {
     }
 
     public void setCantidadCuatrimestres(Integer cantidadCuatrimestres) {
+
+        //En esta universidad ninguna carrera puede durar mas de 6 anios o 12 cuatrimestres
+        if (cantidadCuatrimestres <= 0 || cantidadCuatrimestres > 12) {
+            //throw new CantidadCuatrimestresInvalidaException();
+        }
         this.cantidadCuatrimestres = cantidadCuatrimestres;
     }
 
@@ -68,5 +73,12 @@ public class Carrera {
 
     public void setMaterias(List<Materia> materias) {
         this.materias = materias;
+    }
+
+
+    public void agregarMateria(Materia materia) {
+        if (materia instanceof Materia) {
+            materias.add(materia);
+        }
     }
 }

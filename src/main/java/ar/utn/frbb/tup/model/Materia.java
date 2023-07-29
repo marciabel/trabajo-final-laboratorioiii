@@ -1,6 +1,7 @@
 package ar.utn.frbb.tup.model;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Materia {
     private Integer materiaId;
@@ -102,4 +103,6 @@ public class Materia {
     public void setCorrelatividades(List<Materia> correlatividades) {
         this.correlatividades = correlatividades;
     }
+
+
 }
