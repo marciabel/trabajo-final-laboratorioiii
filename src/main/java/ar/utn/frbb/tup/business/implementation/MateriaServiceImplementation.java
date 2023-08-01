@@ -8,6 +8,7 @@ import ar.utn.frbb.tup.model.Carrera;
 import ar.utn.frbb.tup.model.Materia;
 import ar.utn.frbb.tup.model.Profesor;
 import ar.utn.frbb.tup.persistence.MateriaDao;
+import ar.utn.frbb.tup.persistence.exception.CarreraNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class MateriaServiceImplementation implements MateriaService {
     CarreraService carreraService;
 
     @Override
-    public Materia crearMateria(MateriaDTO materiaDTO) {
+    public Materia crearMateria(MateriaDTO materiaDTO) throws CarreraNotFoundException {
         Materia m = new Materia();
         m.setMateriaId(materiaDTO.getIdCarrera());
         m.setNombre(materiaDTO.getNombre());

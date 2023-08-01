@@ -2,15 +2,33 @@ package ar.utn.frbb.tup.dto;
 
 import ar.utn.frbb.tup.model.Materia;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CarreraDTO {
-
+    private String nombre;
     private Integer idCarrera;
     private Integer departamento;
     private Integer cantidadCuatrimestres;
-    private List<Materia> materias;
 
+
+    @Override
+    public String toString() {
+        return "CarreraDTO{" +
+                "nombre='" + nombre + '\'' +
+                ", idCarrera=" + idCarrera +
+                ", departamento=" + departamento +
+                ", cantidadCuatrimestres=" + cantidadCuatrimestres +
+                '}';
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     public Integer getIdCarrera() {
         return idCarrera;
@@ -36,11 +54,4 @@ public class CarreraDTO {
         this.cantidadCuatrimestres = cantidadCuatrimestres;
     }
 
-    public List<Materia> getMaterias() {
-        return materias;
-    }
-
-    public void setMaterias(List<Materia> materias) {
-        this.materias = materias;
-    }
 }
