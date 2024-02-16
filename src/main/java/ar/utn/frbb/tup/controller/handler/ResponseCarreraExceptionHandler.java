@@ -8,6 +8,7 @@ import ar.utn.frbb.tup.persistence.exception.CarreraNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -70,5 +71,16 @@ public class ResponseCarreraExceptionHandler extends ResponseEntityExceptionHand
         return handleExceptionInternal(ex, error,
                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        if (body == null) {
+            CustomApiError error = new CustomApiError();
+            error.setErrorMessage(ex.getMessage());
+            body = error;
+        }
+
+        return new ResponseEntity<>(body, headers, status);
     }
 }

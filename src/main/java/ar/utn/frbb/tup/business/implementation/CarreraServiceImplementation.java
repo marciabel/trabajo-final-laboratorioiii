@@ -28,7 +28,6 @@ public class CarreraServiceImplementation implements CarreraService {
 
         Carrera carrera = new Carrera();
 
-
         carrera.setNombre(validarNombre(carreraDTO.getNombre()));
 
         carrera.setIdCarrera(carreraDTO.getIdCarrera());
@@ -37,10 +36,6 @@ public class CarreraServiceImplementation implements CarreraService {
 
         //Al dar de alta una carrera, la lista de materias esta vacia.
         carrera.setMaterias(new ArrayList<>());
-
-        System.out.println("Carrera : " + carrera);
-        System.out.println("CarreraDTO : " + carreraDTO);
-
 
         return carreraDao.crearCarrera(carrera);
     }
@@ -118,10 +113,10 @@ public class CarreraServiceImplementation implements CarreraService {
     public Integer validarCantidadCuatrimestres(Integer cuatrimestres) throws CantidadCuatrimestresInvalidException {
         //En esta universidad ninguna carrera puede durar mas de 6 anios o 12 cuatrimestres
         if  (cuatrimestres == null) {
-            throw new CantidadCuatrimestresInvalidException("Cantidad de cuatrimestres no peude ser nulo");
+            throw new CantidadCuatrimestresInvalidException("Cantidad de cuatrimestres no puede ser nulo");
         }
         else if (cuatrimestres <= 0 || cuatrimestres > 12) {
-            throw new CantidadCuatrimestresInvalidException(cuatrimestres + " no es una cantidad válida de cuatrimestres");
+            throw new CantidadCuatrimestresInvalidException(cuatrimestres + " no es una cantidad valida de cuatrimestres");
         }
         return cuatrimestres;
     }

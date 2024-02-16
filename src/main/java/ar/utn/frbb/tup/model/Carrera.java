@@ -31,7 +31,7 @@ public class Carrera {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Carrera c = (Carrera) obj;
-        return Objects.equals(nombre, c.getNombre()) && Objects.equals(idCarrera, ((Carrera) obj).idCarrera);
+        return Objects.equals(this.nombre, c.getNombre()) && Objects.equals(this.idCarrera, c.getIdCarrera()) && Objects.equals(this.departamento, c.getDepartamento()) && Objects.equals(this.cantidadCuatrimestres, c.getCantidadCuatrimestres());
     }
 
     @Override

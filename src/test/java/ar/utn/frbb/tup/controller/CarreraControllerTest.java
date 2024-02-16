@@ -1,6 +1,7 @@
 package ar.utn.frbb.tup.controller;
 
 import ar.utn.frbb.tup.business.CarreraService;
+import ar.utn.frbb.tup.business.exception.NombreInvalidoException;
 import ar.utn.frbb.tup.dto.CarreraDTO;
 import ar.utn.frbb.tup.model.Carrera;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,7 +48,7 @@ public class CarreraControllerTest {
 
 //        Arrange
         Carrera carreraExpected = new Carrera();
-        carreraExpected.setIdCarrera(100);
+        carreraExpected.setIdCarrera(150);
         carreraExpected.setNombre("Tecnicatura Universitaria en Programacion");
         carreraExpected.setDepartamento(15);
         carreraExpected.setCantidadCuatrimestres(8);
@@ -56,7 +57,7 @@ public class CarreraControllerTest {
         Mockito.when(carreraService.crearCarrera(any(CarreraDTO.class))).thenReturn(carreraExpected);
 
         CarreraDTO carreraDTO = new CarreraDTO();
-        carreraDTO.setIdCarrera(100);
+        carreraDTO.setIdCarrera(150);
         carreraDTO.setNombre("Tecnicatura Universitaria en Programacion");
         carreraDTO.setDepartamento(15);
         carreraDTO.setCantidadCuatrimestres(8);
@@ -78,19 +79,25 @@ public class CarreraControllerTest {
     @Test
     public void testCrearCarreraBadRequest() throws Exception {
 
-        Mockito.when(carreraService.crearCarrera(any(CarreraDTO.class))).thenReturn(new Carrera());
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/carrera")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                    "idCarrera": 36,
-                                    "departamento": 45,
-                                    "cantidadCuatrimestres": 8
-                                }""")
-                        .accept(MediaType.APPLICATION_JSON))
-                        .andDo(print())
-                        .andExpect(status().isBadRequest())
-                        .andReturn();
+        Mockito.when(carreraService.crearCarrera(any(CarreraDTO.class))).thenThrow(new NombreInvalidoException(""));
+
+        CarreraDTO carreraDTO = new CarreraDTO();
+        carreraDTO.setIdCarrera(100);
+
+        //carreraDTO.setNombre("Tecnicatura Universitaria en Programacion");
+        carreraDTO.setDepartamento(15);
+        carreraDTO.setCantidadCuatrimestres(8);
+
+        MvcResult result = mockMvc
+                .perform(MockMvcRequestBuilders.post("/carrera")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(carreraDTO))
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+
 
     }
 

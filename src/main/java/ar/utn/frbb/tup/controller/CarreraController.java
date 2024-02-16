@@ -10,7 +10,6 @@ import ar.utn.frbb.tup.persistence.exception.CarreraAlreadyExistsException;
 import ar.utn.frbb.tup.persistence.exception.CarreraNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Map;
 
 @RestController
@@ -36,6 +35,5 @@ public class CarreraController {
     public void eliminarCarrera(@PathVariable Integer idCarrera) throws CarreraNotFoundException {
         carreraService.eliminarCarrera(idCarrera);
         return ;
-
     }
 }
