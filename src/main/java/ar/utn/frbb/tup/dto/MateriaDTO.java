@@ -1,12 +1,13 @@
 package ar.utn.frbb.tup.dto;
 
-import ar.utn.frbb.tup.model.Carrera;
-import ar.utn.frbb.tup.model.Materia;
-import ar.utn.frbb.tup.model.Profesor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.Optional;
 
+@Setter
+@Getter
 public class MateriaDTO {
     private Integer materiaId;
     private String nombre;

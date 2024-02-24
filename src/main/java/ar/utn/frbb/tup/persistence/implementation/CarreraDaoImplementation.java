@@ -22,7 +22,7 @@ public class CarreraDaoImplementation implements CarreraDao {
     //private static final String FILE_PATH = "/src/main/java/ar.utn.frbb.tup/persistence/memory/repositorioCarreras.json";
 
     @Override
-    public Carrera crearCarrera(Carrera carrera) throws CarreraAlreadyExistsException {
+    public Carrera createCarrera(Carrera carrera) throws CarreraAlreadyExistsException {
         if (repositorioCarreras.containsKey(carrera.getIdCarrera())) {
             throw new CarreraAlreadyExistsException("El id ingresado ya pertenece a otra carrera");
         }

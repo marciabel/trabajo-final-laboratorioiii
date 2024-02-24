@@ -1,10 +1,11 @@
 package ar.utn.frbb.tup.controller.handler;
 
 import ar.utn.frbb.tup.business.exception.CantidadCuatrimestresInvalidException;
-import ar.utn.frbb.tup.business.exception.DepartamentoInvalidoException;
+import ar.utn.frbb.tup.business.exception.ValorInvalidoException;
 import ar.utn.frbb.tup.business.exception.NombreInvalidoException;
 import ar.utn.frbb.tup.persistence.exception.CarreraAlreadyExistsException;
 import ar.utn.frbb.tup.persistence.exception.CarreraNotFoundException;
+import ar.utn.frbb.tup.persistence.exception.MateriaAlreadyExistsException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,9 +40,20 @@ public class ResponseCarreraExceptionHandler extends ResponseEntityExceptionHand
 
     }
 
-    @ExceptionHandler (value = {DepartamentoInvalidoException.class})
-    protected ResponseEntity<Object> handleDepartamentoInvalido(
-            DepartamentoInvalidoException ex, WebRequest request) {
+    @ExceptionHandler (value = {MateriaAlreadyExistsException.class})
+    protected ResponseEntity<Object> handleMateriaAlreadyExists(
+            CarreraAlreadyExistsException ex, WebRequest request) {
+        String exceptionMessage = ex.getMessage();
+        CustomApiError error = new CustomApiError();
+        error.setErrorMessage(exceptionMessage);
+        return handleExceptionInternal(ex, error,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+
+    }
+
+    @ExceptionHandler (value = {ValorInvalidoException.class})
+    protected ResponseEntity<Object> handleValorInvalido(
+            ValorInvalidoException ex, WebRequest request) {
         String exceptionMessage = ex.getMessage();
         CustomApiError error = new CustomApiError();
         error.setErrorMessage(exceptionMessage);

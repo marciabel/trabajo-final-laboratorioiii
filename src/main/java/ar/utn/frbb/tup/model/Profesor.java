@@ -1,7 +1,11 @@
 package ar.utn.frbb.tup.model;
 
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.List;
+@Setter
+@Getter
 public class Profesor {
     private Integer idProfesor;
     private String nombre;
@@ -39,45 +43,5 @@ public class Profesor {
                 ", titulo='" + titulo + '\'' +
                 ", materiasDictadas=" + materiasDictadas +
                 '}';
-    }
-
-    public Integer getIdProfesor() {
-        return idProfesor;
-    }
-
-    public void setIdProfesor(Integer idProfesor) {
-        this.idProfesor = idProfesor;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public List<Materia> getMateriasDictadas() {
-        return materiasDictadas;
-    }
-
-    public void setMateriasDictadas(List<Materia> materiasDictadas) {
-        this.materiasDictadas = materiasDictadas;
     }
 }

@@ -1,8 +1,13 @@
 package ar.utn.frbb.tup.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 import java.util.Objects;
 
+@Setter
+@Getter
 public class Carrera {
     private String nombre;
     private Integer idCarrera;
@@ -44,47 +49,6 @@ public class Carrera {
                 ", materias=" + materias +
                 '}';
     }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Integer getIdCarrera() {
-        return idCarrera;
-    }
-
-    public void setIdCarrera(Integer idCarrera) {
-        this.idCarrera = idCarrera;
-    }
-
-    public Integer getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(Integer departamento) {
-        this.departamento = departamento;
-    }
-
-    public Integer getCantidadCuatrimestres() {
-        return cantidadCuatrimestres;
-    }
-
-    public void setCantidadCuatrimestres(Integer cantidadCuatrimestres) {
-        this.cantidadCuatrimestres = cantidadCuatrimestres;
-    }
-
-    public List<Materia> getMaterias() {
-        return materias;
-    }
-
-    public void setMaterias(List<Materia> materias) {
-        this.materias = materias;
-    }
-
 
     public void agregarMateria(Materia materia) {
         if (materia instanceof Materia) {

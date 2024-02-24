@@ -1,12 +1,11 @@
 package ar.utn.frbb.tup.business;
 
 import ar.utn.frbb.tup.business.exception.CantidadCuatrimestresInvalidException;
-import ar.utn.frbb.tup.business.exception.DepartamentoInvalidoException;
+import ar.utn.frbb.tup.business.exception.ValorInvalidoException;
 import ar.utn.frbb.tup.business.exception.NombreInvalidoException;
 import ar.utn.frbb.tup.business.implementation.CarreraServiceImplementation;
 import ar.utn.frbb.tup.dto.CarreraDTO;
 import ar.utn.frbb.tup.model.Carrera;
-import ar.utn.frbb.tup.persistence.CarreraDao;
 import ar.utn.frbb.tup.persistence.exception.CarreraAlreadyExistsException;
 import ar.utn.frbb.tup.persistence.implementation.CarreraDaoImplementation;
 import org.junit.jupiter.api.Assertions;
@@ -17,7 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 
@@ -39,7 +37,7 @@ public class CarreraServiceTest {
     }
 
     @Test
-    void crearCarreraTest() throws CarreraAlreadyExistsException, NombreInvalidoException, CantidadCuatrimestresInvalidException, DepartamentoInvalidoException {
+    void crearCarreraTest() throws CarreraAlreadyExistsException, NombreInvalidoException, CantidadCuatrimestresInvalidException, ValorInvalidoException {
         Carrera carreraExpected = new Carrera();
         carreraExpected.setIdCarrera(100);
         carreraExpected.setNombre("Tecnicatura Universitaria en Programacion");
@@ -47,7 +45,7 @@ public class CarreraServiceTest {
         carreraExpected.setCantidadCuatrimestres(8);
         carreraExpected.setMaterias(new ArrayList<>());
 
-        Mockito.when(carreraDao.crearCarrera(any(Carrera.class))).thenReturn(carreraExpected);
+        Mockito.when(carreraDao.createCarrera(any(Carrera.class))).thenReturn(carreraExpected);
 
         CarreraDTO carreraDTO = new CarreraDTO();
         carreraDTO.setIdCarrera(150);

@@ -1,7 +1,12 @@
 package ar.utn.frbb.tup.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
+@Setter
+@Getter
 public class Alumno {
     private Integer idAlumno;
     private String nombre;
@@ -39,53 +44,5 @@ public class Alumno {
                 ", dni=" + dni +
                 ", asignaturas=" + asignaturas +
                 '}';
-    }
-
-    public Integer getId() {
-        return idAlumno;
-    }
-
-    public void setId(Integer id) {
-        this.idAlumno = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public Integer getDni() {
-        return dni;
-    }
-
-    public void setDni(Integer dni) {
-        this.dni = dni;
-    }
-
-    public Carrera getCarrera() {
-        return carrera;
-    }
-
-    public void setCarrera(Carrera carrera) {
-        this.carrera = carrera;
-    }
-
-    public List<Asignatura> getAsignaturas() {
-        return asignaturas;
-    }
-
-    public void setAsignaturas(List<Asignatura> asignaturas) {
-        this.asignaturas = asignaturas;
     }
 }

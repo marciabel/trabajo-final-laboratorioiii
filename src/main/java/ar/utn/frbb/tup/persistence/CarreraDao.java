@@ -5,7 +5,7 @@ import ar.utn.frbb.tup.persistence.exception.CarreraAlreadyExistsException;
 import ar.utn.frbb.tup.persistence.exception.CarreraNotFoundException;
 
 public interface CarreraDao {
-    Carrera crearCarrera(Carrera carrera) throws CarreraAlreadyExistsException;
+    Carrera createCarrera(Carrera carrera) throws CarreraAlreadyExistsException;
 
     Carrera getCarrera(Integer idCarrera) throws CarreraNotFoundException;
 

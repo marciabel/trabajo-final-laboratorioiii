@@ -1,7 +1,7 @@
 package ar.utn.frbb.tup.controller;
 
 import ar.utn.frbb.tup.business.CarreraService;
-import ar.utn.frbb.tup.business.exception.DepartamentoInvalidoException;
+import ar.utn.frbb.tup.business.exception.ValorInvalidoException;
 import ar.utn.frbb.tup.business.exception.NombreInvalidoException;
 import ar.utn.frbb.tup.dto.CarreraDTO;
 import ar.utn.frbb.tup.model.Carrera;
@@ -20,7 +20,7 @@ public class CarreraController {
     CarreraService carreraService;
 
     @PostMapping
-    public Carrera crearCarrera(@RequestBody CarreraDTO carreraDTO) throws CarreraAlreadyExistsException, CantidadCuatrimestresInvalidException, NombreInvalidoException, DepartamentoInvalidoException {
+    public Carrera crearCarrera(@RequestBody CarreraDTO carreraDTO) throws CarreraAlreadyExistsException, CantidadCuatrimestresInvalidException, NombreInvalidoException, ValorInvalidoException {
         Carrera c = carreraService.crearCarrera(carreraDTO);
         System.out.println(c);
         return c;

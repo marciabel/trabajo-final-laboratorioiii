@@ -1,6 +1,6 @@
 package ar.utn.frbb.tup.business;
 
-import ar.utn.frbb.tup.business.exception.DepartamentoInvalidoException;
+import ar.utn.frbb.tup.business.exception.ValorInvalidoException;
 import ar.utn.frbb.tup.business.exception.NombreInvalidoException;
 import ar.utn.frbb.tup.dto.CarreraDTO;
 import ar.utn.frbb.tup.model.Carrera;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface CarreraService {
-    Carrera crearCarrera(CarreraDTO carreraDTO) throws CarreraAlreadyExistsException, CantidadCuatrimestresInvalidException, NombreInvalidoException, DepartamentoInvalidoException;
+    Carrera crearCarrera(CarreraDTO carreraDTO) throws CarreraAlreadyExistsException, CantidadCuatrimestresInvalidException, NombreInvalidoException, ValorInvalidoException;
 
 
     Carrera modificarCarrera(Integer idCarrera, Map<String, Object> atributos) throws CarreraNotFoundException, CantidadCuatrimestresInvalidException, NombreInvalidoException;

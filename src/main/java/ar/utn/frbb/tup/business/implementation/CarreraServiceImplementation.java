@@ -1,7 +1,7 @@
 package ar.utn.frbb.tup.business.implementation;
 
 import ar.utn.frbb.tup.business.CarreraService;
-import ar.utn.frbb.tup.business.exception.DepartamentoInvalidoException;
+import ar.utn.frbb.tup.business.exception.ValorInvalidoException;
 import ar.utn.frbb.tup.business.exception.NombreInvalidoException;
 import ar.utn.frbb.tup.dto.CarreraDTO;
 import ar.utn.frbb.tup.model.Carrera;
@@ -24,7 +24,7 @@ public class CarreraServiceImplementation implements CarreraService {
     CarreraDao carreraDao;
 
     @Override
-    public Carrera crearCarrera(CarreraDTO carreraDTO) throws CarreraAlreadyExistsException, CantidadCuatrimestresInvalidException, NombreInvalidoException, DepartamentoInvalidoException {
+    public Carrera crearCarrera(CarreraDTO carreraDTO) throws CarreraAlreadyExistsException, CantidadCuatrimestresInvalidException, NombreInvalidoException, ValorInvalidoException {
 
         Carrera carrera = new Carrera();
 
@@ -37,7 +37,7 @@ public class CarreraServiceImplementation implements CarreraService {
         //Al dar de alta una carrera, la lista de materias esta vacia.
         carrera.setMaterias(new ArrayList<>());
 
-        return carreraDao.crearCarrera(carrera);
+        return carreraDao.createCarrera(carrera);
     }
 
     @Override
@@ -100,12 +100,12 @@ public class CarreraServiceImplementation implements CarreraService {
         return nombre;
     }
 
-    public Integer validarDepartamento (Integer departamento) throws DepartamentoInvalidoException {
+    public Integer validarDepartamento (Integer departamento) throws ValorInvalidoException {
         if (departamento == null) {
-            throw new DepartamentoInvalidoException("El departamento no puede ser nulo.");
+            throw new ValorInvalidoException("El departamento no puede ser nulo.");
         }
         else if (departamento < 0) {
-            throw new DepartamentoInvalidoException("El id del departamento no puede ser negativo.");
+            throw new ValorInvalidoException("El id del departamento no puede ser negativo.");
         }
         return departamento;
     }

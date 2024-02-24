@@ -1,5 +1,10 @@
 package ar.utn.frbb.tup.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class Asignatura {
     private Materia materia;
     private EstadoAsignatura estado;
@@ -32,29 +37,5 @@ public class Asignatura {
                 ", estado=" + estado +
                 ", nota=" + nota +
                 '}';
-    }
-
-    public Materia getMateria() {
-        return materia;
-    }
-
-    public void setMateria(Materia materia) {
-        this.materia = materia;
-    }
-
-    public EstadoAsignatura getEstado() {
-        return estado;
-    }
-
-    public void setEstado(EstadoAsignatura estado) {
-        this.estado = estado;
-    }
-
-    public Integer getNota() {
-        return nota;
-    }
-
-    public void setNota(Integer nota) {
-        this.nota = nota;
     }
 }
