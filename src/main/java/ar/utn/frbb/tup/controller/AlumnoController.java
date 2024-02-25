@@ -2,6 +2,7 @@ package ar.utn.frbb.tup.controller;
 
 import ar.utn.frbb.tup.business.AlumnoService;
 import ar.utn.frbb.tup.business.MateriaService;
+import ar.utn.frbb.tup.business.exception.ValorInvalidoException;
 import ar.utn.frbb.tup.dto.AlumnoDto;
 import ar.utn.frbb.tup.dto.MateriaDTO;
 import ar.utn.frbb.tup.model.Alumno;
@@ -17,8 +18,8 @@ import java.util.Map;
 public class AlumnoController {
     @Autowired
     AlumnoService alumnoService;
-    @PostMapping("/")
-    public Alumno crearAlumno(@RequestBody AlumnoDto alumnoDTO) {
+    @PostMapping
+    public Alumno crearAlumno(@RequestBody AlumnoDto alumnoDTO) throws CarreraNotFoundException, ValorInvalidoException {
         return alumnoService.crearAlumno(alumnoDTO);
     }
 

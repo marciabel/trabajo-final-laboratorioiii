@@ -4,12 +4,9 @@ import ar.utn.frbb.tup.model.Carrera;
 import ar.utn.frbb.tup.persistence.CarreraDao;
 import ar.utn.frbb.tup.persistence.exception.CarreraAlreadyExistsException;
 import ar.utn.frbb.tup.persistence.exception.CarreraNotFoundException;
-import ar.utn.frbb.tup.persistence.memory.FileHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Map;

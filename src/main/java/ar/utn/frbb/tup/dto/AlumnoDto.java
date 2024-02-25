@@ -11,7 +11,7 @@ public class AlumnoDto {
     private String nombre;
     private String apellido;
     private Integer dni;
-    private Carrera carrera;
+    private Integer idCarrera;
 
     @Override
     public int hashCode() {
@@ -30,7 +30,7 @@ public class AlumnoDto {
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
                 ", dni=" + dni +
-                ", carrera=" + carrera +
+                ", idCarrera=" + idCarrera +
                 '}';
     }
 }
