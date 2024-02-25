@@ -2,6 +2,7 @@ package ar.utn.frbb.tup.controller;
 
 import ar.utn.frbb.tup.business.MateriaService;
 import ar.utn.frbb.tup.business.exception.CantidadCuatrimestresInvalidException;
+import ar.utn.frbb.tup.business.exception.MateriaNoExisteException;
 import ar.utn.frbb.tup.business.exception.NombreInvalidoException;
 import ar.utn.frbb.tup.business.exception.ValorInvalidoException;
 import ar.utn.frbb.tup.dto.MateriaDTO;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("materia")
@@ -22,7 +22,7 @@ public class MateriaController {
     @Autowired
     MateriaService materiaService;
     @PostMapping
-    public Materia crearMateria(@RequestBody MateriaDTO materiaDTO) throws CarreraNotFoundException, NombreInvalidoException, ValorInvalidoException, MateriaAlreadyExistsException, CantidadCuatrimestresInvalidException {
+    public Materia crearMateria(@RequestBody MateriaDTO materiaDTO) throws CarreraNotFoundException, NombreInvalidoException, ValorInvalidoException, MateriaAlreadyExistsException, CantidadCuatrimestresInvalidException, MateriaNoExisteException {
         return materiaService.crearMateria(materiaDTO);
     }
 
@@ -32,12 +32,12 @@ public class MateriaController {
     }
 
     @DeleteMapping("/{idMateria}")
-    public void eliminarMateria(@PathVariable Integer idMateria) {
-        materiaService.eliminarMateria(idMateria);
+    public String eliminarMateria(@PathVariable Integer idMateria) throws MateriaNoExisteException {
+        return materiaService.eliminarMateria(idMateria);
     }
 
     @GetMapping("/buscar")
-    public List<Materia> buscarMateriasPorNombre(@RequestParam(required = false) String nombre) {
+    public List<Materia> buscarMateriasPorNombre(@RequestParam(required = false) String nombre) throws MateriaNoExisteException {
         if (nombre != null && !nombre.isEmpty()) {
             return materiaService.buscarPorNombre(nombre);
         } else {

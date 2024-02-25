@@ -1,11 +1,8 @@
 package ar.utn.frbb.tup.controller.handler;
 
-import ar.utn.frbb.tup.business.exception.CantidadCuatrimestresInvalidException;
-import ar.utn.frbb.tup.business.exception.ValorInvalidoException;
-import ar.utn.frbb.tup.business.exception.NombreInvalidoException;
-import ar.utn.frbb.tup.persistence.exception.CarreraAlreadyExistsException;
-import ar.utn.frbb.tup.persistence.exception.CarreraNotFoundException;
-import ar.utn.frbb.tup.persistence.exception.MateriaAlreadyExistsException;
+import ar.utn.frbb.tup.business.exception.*;
+import ar.utn.frbb.tup.model.Materia;
+import ar.utn.frbb.tup.persistence.exception.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +39,18 @@ public class ResponseCarreraExceptionHandler extends ResponseEntityExceptionHand
 
     @ExceptionHandler (value = {MateriaAlreadyExistsException.class})
     protected ResponseEntity<Object> handleMateriaAlreadyExists(
-            CarreraAlreadyExistsException ex, WebRequest request) {
+            MateriaAlreadyExistsException ex, WebRequest request) {
+        String exceptionMessage = ex.getMessage();
+        CustomApiError error = new CustomApiError();
+        error.setErrorMessage(exceptionMessage);
+        return handleExceptionInternal(ex, error,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+
+    }
+
+    @ExceptionHandler (value = {MateriaNoExisteException.class})
+    protected ResponseEntity<Object> handleMateriaDoesntExists(
+            MateriaNoExisteException ex, WebRequest request) {
         String exceptionMessage = ex.getMessage();
         CustomApiError error = new CustomApiError();
         error.setErrorMessage(exceptionMessage);
@@ -54,6 +62,28 @@ public class ResponseCarreraExceptionHandler extends ResponseEntityExceptionHand
     @ExceptionHandler (value = {ValorInvalidoException.class})
     protected ResponseEntity<Object> handleValorInvalido(
             ValorInvalidoException ex, WebRequest request) {
+        String exceptionMessage = ex.getMessage();
+        CustomApiError error = new CustomApiError();
+        error.setErrorMessage(exceptionMessage);
+        return handleExceptionInternal(ex, error,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+
+    }
+
+    @ExceptionHandler (value = {NotaNoValidaException.class})
+    protected ResponseEntity<Object> handleValorInvalido(
+            NotaNoValidaException ex, WebRequest request) {
+        String exceptionMessage = ex.getMessage();
+        CustomApiError error = new CustomApiError();
+        error.setErrorMessage(exceptionMessage);
+        return handleExceptionInternal(ex, error,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+
+    }
+
+    @ExceptionHandler (value = {EstadoNoValidoException.class})
+    protected ResponseEntity<Object> handleValorInvalido(
+            EstadoNoValidoException ex, WebRequest request) {
         String exceptionMessage = ex.getMessage();
         CustomApiError error = new CustomApiError();
         error.setErrorMessage(exceptionMessage);
@@ -94,5 +124,27 @@ public class ResponseCarreraExceptionHandler extends ResponseEntityExceptionHand
         }
 
         return new ResponseEntity<>(body, headers, status);
+    }
+
+    @ExceptionHandler (value = {AlumnoAlreadyExistsException.class})
+    protected ResponseEntity<Object> handleMateriaAlreadyExists(
+            AlumnoAlreadyExistsException ex, WebRequest request) {
+        String exceptionMessage = ex.getMessage();
+        CustomApiError error = new CustomApiError();
+        error.setErrorMessage(exceptionMessage);
+        return handleExceptionInternal(ex, error,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+
+    }
+
+    @ExceptionHandler (value = {AlumnoNoExisteException.class})
+    protected ResponseEntity<Object> handleMateriaAlreadyExists(
+            AlumnoNoExisteException ex, WebRequest request) {
+        String exceptionMessage = ex.getMessage();
+        CustomApiError error = new CustomApiError();
+        error.setErrorMessage(exceptionMessage);
+        return handleExceptionInternal(ex, error,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+
     }
 }

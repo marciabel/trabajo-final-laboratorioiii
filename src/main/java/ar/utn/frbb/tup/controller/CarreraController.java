@@ -27,13 +27,12 @@ public class CarreraController {
     }
 
     @PatchMapping("/{idCarrera}")
-    public Carrera modificarCarrera(@PathVariable Integer idCarrera, @RequestBody Map<String,Object> campos) throws CarreraNotFoundException, CantidadCuatrimestresInvalidException, NombreInvalidoException {
+    public Carrera modificarCarrera(@PathVariable Integer idCarrera, @RequestBody Map<String,Object> campos) throws CarreraNotFoundException, CantidadCuatrimestresInvalidException, NombreInvalidoException, ValorInvalidoException {
         return carreraService.modificarCarrera(idCarrera, campos);
     }
 
     @DeleteMapping("/{idCarrera}")
-    public void eliminarCarrera(@PathVariable Integer idCarrera) throws CarreraNotFoundException {
-        carreraService.eliminarCarrera(idCarrera);
-        return ;
+    public String eliminarCarrera(@PathVariable Integer idCarrera) throws CarreraNotFoundException {
+        return carreraService.eliminarCarrera(idCarrera);
     }
 }

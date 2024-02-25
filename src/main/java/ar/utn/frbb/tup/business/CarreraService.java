@@ -16,13 +16,13 @@ public interface CarreraService {
     Carrera crearCarrera(CarreraDTO carreraDTO) throws CarreraAlreadyExistsException, CantidadCuatrimestresInvalidException, NombreInvalidoException, ValorInvalidoException;
 
 
-    Carrera modificarCarrera(Integer idCarrera, Map<String, Object> atributos) throws CarreraNotFoundException, CantidadCuatrimestresInvalidException, NombreInvalidoException;
+    Carrera modificarCarrera(Integer idCarrera, Map<String, Object> atributos) throws CarreraNotFoundException, CantidadCuatrimestresInvalidException, NombreInvalidoException, ValorInvalidoException;
 
-    void modificarAtributos(String nombreAtributo, Object value, Carrera carrera) throws CantidadCuatrimestresInvalidException, NombreInvalidoException;
+    void modificarAtributos(String nombreAtributo, Object value, Carrera carrera) throws CantidadCuatrimestresInvalidException, NombreInvalidoException, ValorInvalidoException;
 
     void agregarMateria(Carrera carrera, Materia materia);
 
-    void eliminarCarrera(Integer idCarrera) throws CarreraNotFoundException;
+    String eliminarCarrera(Integer idCarrera) throws CarreraNotFoundException;
 
     Carrera getCarreraById(Integer idCarrera) throws CarreraNotFoundException;
 

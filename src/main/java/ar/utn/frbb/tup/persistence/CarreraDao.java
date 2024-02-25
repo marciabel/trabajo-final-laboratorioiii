@@ -10,7 +10,7 @@ public interface CarreraDao {
 
     Carrera getCarrera(Integer idCarrera) throws CarreraNotFoundException;
 
-    void deleteCarrera(Integer idCarrera) throws CarreraNotFoundException;
+    String deleteCarrera(Integer idCarrera) throws CarreraNotFoundException;
 
     Carrera updateCarrera(Integer idCarrera, Carrera carrera) throws CarreraNotFoundException;
 

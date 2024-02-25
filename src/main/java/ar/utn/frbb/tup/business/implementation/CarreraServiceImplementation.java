@@ -8,6 +8,7 @@ import ar.utn.frbb.tup.model.Carrera;
 import ar.utn.frbb.tup.model.Materia;
 import ar.utn.frbb.tup.business.exception.CantidadCuatrimestresInvalidException;
 import ar.utn.frbb.tup.persistence.CarreraDao;
+import ar.utn.frbb.tup.persistence.MateriaDao;
 import ar.utn.frbb.tup.persistence.exception.CarreraAlreadyExistsException;
 import ar.utn.frbb.tup.persistence.exception.CarreraNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ public class CarreraServiceImplementation implements CarreraService {
 
     @Autowired
     CarreraDao carreraDao;
+
+    @Autowired
+    MateriaDao materiaDAO;
+
 
     @Override
     public Carrera crearCarrera(CarreraDTO carreraDTO) throws CarreraAlreadyExistsException, CantidadCuatrimestresInvalidException, NombreInvalidoException, ValorInvalidoException {
@@ -41,7 +46,7 @@ public class CarreraServiceImplementation implements CarreraService {
     }
 
     @Override
-    public Carrera modificarCarrera(Integer idCarrera, Map<String, Object> atributos) throws CarreraNotFoundException, CantidadCuatrimestresInvalidException, NombreInvalidoException {
+    public Carrera modificarCarrera(Integer idCarrera, Map<String, Object> atributos) throws CarreraNotFoundException, CantidadCuatrimestresInvalidException, NombreInvalidoException, ValorInvalidoException {
         Carrera carrera = carreraDao.getCarrera(idCarrera);
 
         for (Map.Entry<String, Object> atributo : atributos.entrySet()) {
@@ -55,7 +60,7 @@ public class CarreraServiceImplementation implements CarreraService {
         return carrera;
     }
 
-    public void modificarAtributos(String nombreAtributo, Object value, Carrera carrera) throws CantidadCuatrimestresInvalidException, NombreInvalidoException {
+    public void modificarAtributos(String nombreAtributo, Object value, Carrera carrera) throws CantidadCuatrimestresInvalidException, NombreInvalidoException, ValorInvalidoException {
         switch (nombreAtributo) {
             case "nombre" -> {
                 if (value instanceof String) {
@@ -74,7 +79,7 @@ public class CarreraServiceImplementation implements CarreraService {
             }
             case "materias" -> {
                 if (value instanceof List) {
-                    agregarMaterias(carrera, (List<Materia>) value);
+                    agregarMaterias(carrera, (List<Integer>) value);
                 }
             }
         }
@@ -84,14 +89,12 @@ public class CarreraServiceImplementation implements CarreraService {
     @Override
     public void agregarMateria(Carrera carrera, Materia materia) {
         carreraDao.agregarMateriaACarrera(carrera, materia);
-        System.out.println("AFTER ADDING THE MATERIA -----------------------");
     }
 
-    public void agregarMaterias(Carrera carrera, List<Materia> materias) {
-        for (Materia materia: materias) {
-            if (materia instanceof Materia) {
-                carrera.agregarMateria(materia);
-            }
+    public void agregarMaterias(Carrera carrera, List<Integer> idMaterias) throws ValorInvalidoException {
+        for (Integer idMateria: idMaterias) {
+            Materia m = materiaDAO.getMateriaById(idMateria);
+            carrera.getMaterias().add(m);
         }
     }
 
@@ -128,8 +131,8 @@ public class CarreraServiceImplementation implements CarreraService {
     }
 
     @Override
-    public void eliminarCarrera(Integer idCarrera) throws CarreraNotFoundException {
-        carreraDao.deleteCarrera(idCarrera);
+    public String eliminarCarrera(Integer idCarrera) throws CarreraNotFoundException {
+        return carreraDao.deleteCarrera(idCarrera);
     }
 
     @Override

@@ -49,6 +49,7 @@ public class Carrera {
                 ", idCarrera=" + idCarrera +
                 ", departamento=" + departamento +
                 ", cantidadCuatrimestres=" + cantidadCuatrimestres +
+                ", materias=" + materias +
                 '}';
     }
 

@@ -1,5 +1,6 @@
 package ar.utn.frbb.tup.persistence.implementation;
 
+import ar.utn.frbb.tup.business.exception.MateriaNoExisteException;
 import ar.utn.frbb.tup.model.Materia;
 import ar.utn.frbb.tup.persistence.CarreraDao;
 import ar.utn.frbb.tup.persistence.MateriaDao;
@@ -43,16 +44,20 @@ public class MateriaDaoImplementation implements MateriaDao {
 
 
     @Override
-    public void deleteMateria(Integer idMateria) {
+    public String deleteMateria(Integer idMateria) throws MateriaNoExisteException {
+        if (idMateria == null || !(repositorioMaterias.containsKey(idMateria))) {
+            throw new MateriaNoExisteException("La materia que esta intentando eliminar no existe");
+        }
         repositorioMaterias.remove(idMateria);
-        System.out.println("Materia eliminada");
-        System.out.println(repositorioMaterias);
+        return ("Materia eliminada con exito");
     }
 
     @Override
     public Materia getMateriaById(Integer idMateria) {
-        System.out.println(repositorioMaterias);
-        return repositorioMaterias.get(idMateria);
+        if (repositorioMaterias.containsKey(idMateria)) {
+            return repositorioMaterias.get(idMateria);
+        }
+        return null;
     }
 
     @Override

@@ -36,7 +36,7 @@ public class ValidacionesImplementation implements Validaciones {
             throw new ValorInvalidoException("El valor ingresado para " + nombreAtributo + "no puede ser nulo.");
         }
         else if (valor < 0) {
-            throw new ValorInvalidoException("El valor ingresado para " + nombreAtributo + "no puede ser negativo");
+            throw new ValorInvalidoException("El valor ingresado para " + nombreAtributo + " no puede ser negativo");
         }
         return valor;
     }

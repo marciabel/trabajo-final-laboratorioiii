@@ -36,10 +36,10 @@ public class CarreraDaoImplementation implements CarreraDao {
     }
 
     @Override
-    public void deleteCarrera(Integer idCarrera) throws CarreraNotFoundException {
+    public String deleteCarrera(Integer idCarrera) throws CarreraNotFoundException {
         existeCarrera(idCarrera);
         repositorioCarreras.remove(idCarrera);
-        System.out.println(repositorioCarreras);
+        return "Carrera " + idCarrera + " eliminada con exito";
     }
 
     @Override
@@ -60,21 +60,5 @@ public class CarreraDaoImplementation implements CarreraDao {
     public void agregarMateriaACarrera(Carrera carrera, Materia materia) {
         carrera.agregarMateria(materia);
     }
-
-
-    public static String convertObjectToJson(Object object) {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        try {
-            // Convert the object to JSON string
-            return objectMapper.writeValueAsString(object);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        return null; // Return null on failure (you can handle this differently as needed)
-    }
-
-
 
 }

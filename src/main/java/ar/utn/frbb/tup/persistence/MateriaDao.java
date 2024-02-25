@@ -1,5 +1,6 @@
 package ar.utn.frbb.tup.persistence;
 
+import ar.utn.frbb.tup.business.exception.MateriaNoExisteException;
 import ar.utn.frbb.tup.model.Materia;
 import ar.utn.frbb.tup.persistence.exception.MateriaAlreadyExistsException;
 
@@ -10,7 +11,7 @@ public interface MateriaDao {
 
     Materia updateMateria(Integer idMateria, Materia materia);
 
-    void deleteMateria(Integer idMateria);
+    String deleteMateria(Integer idMateria) throws MateriaNoExisteException;
 
     Materia getMateriaById(Integer idMateria);
 

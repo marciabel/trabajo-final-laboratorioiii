@@ -5,6 +5,7 @@ import ar.utn.frbb.tup.business.MateriaService;
 import ar.utn.frbb.tup.business.ProfesorService;
 import ar.utn.frbb.tup.business.Validaciones;
 import ar.utn.frbb.tup.business.exception.CantidadCuatrimestresInvalidException;
+import ar.utn.frbb.tup.business.exception.MateriaNoExisteException;
 import ar.utn.frbb.tup.business.exception.NombreInvalidoException;
 import ar.utn.frbb.tup.business.exception.ValorInvalidoException;
 import ar.utn.frbb.tup.dto.MateriaDTO;
@@ -38,11 +39,11 @@ public class MateriaServiceImplementation implements MateriaService {
     Validaciones validaciones;
 
     @Override
-    public Materia crearMateria(MateriaDTO materiaDTO) throws CarreraNotFoundException, NombreInvalidoException, ValorInvalidoException, MateriaAlreadyExistsException, CantidadCuatrimestresInvalidException {
+    public Materia crearMateria(MateriaDTO materiaDTO) throws CarreraNotFoundException, NombreInvalidoException, ValorInvalidoException, MateriaAlreadyExistsException, CantidadCuatrimestresInvalidException, MateriaNoExisteException {
         Materia m = new Materia();
 
         //Idealmente este campo sería auto-incremental y no debería poder ingresarse a mano
-        m.setMateriaId(materiaDTO.getMateriaId());
+        m.setMateriaId(validaciones.validarNumeroPositivo(materiaDTO.getMateriaId(), "Materia Id"));
 
         m.setNombre(validaciones.validarNombre(materiaDTO.getNombre()));
 
@@ -55,7 +56,7 @@ public class MateriaServiceImplementation implements MateriaService {
         });
 
         /*Lo mismo con la carrera*/
-        Carrera carrera = carreraService.getCarreraById(materiaDTO.getIdCarrera());
+        Carrera carrera = carreraService.getCarreraById((materiaDTO.getIdCarrera()));
         m.setCarrera(carrera);
         //-----------------------------------------//
 
@@ -69,7 +70,11 @@ public class MateriaServiceImplementation implements MateriaService {
         if (materiaDTO.getIdCorrelatividades().size() > 0) {
             List<Materia> materiasCorrelativas = new ArrayList<Materia>();
             for (Integer idMateria: materiaDTO.getIdCorrelatividades()) {
-                materiasCorrelativas.add(materiaDao.getMateriaById(idMateria));
+                Materia materiaCorrelativa = materiaDao.getMateriaById(idMateria);
+                if (materiaCorrelativa == null) {
+                    throw new MateriaNoExisteException("El id " + idMateria + " que se ingreso en las correlativas no existe");
+                }
+                materiasCorrelativas.add(materiaCorrelativa);
             }
             m.setCorrelatividades(materiasCorrelativas);
         }
@@ -96,7 +101,10 @@ public class MateriaServiceImplementation implements MateriaService {
     }
 
     @Override
-    public List<Materia> buscarPorNombre(String nombre) {
+    public List<Materia> buscarPorNombre(String nombre) throws MateriaNoExisteException {
+        if (materiaDao.getMateriaByName(nombre).isEmpty()) {
+            throw new MateriaNoExisteException("No existen materias para el filtro ingresado");
+        }
         return materiaDao.getMateriaByName(nombre);
     }
 
@@ -128,8 +136,14 @@ public class MateriaServiceImplementation implements MateriaService {
     }
 
     @Override
-    public void eliminarMateria(Integer idMateria) {
-        materiaDao.deleteMateria(idMateria);
+    public Materia getMateriaById(Integer idMateria) throws ValorInvalidoException {
+        validaciones.validarNumeroPositivo(idMateria, "idMateria");
+        return materiaDao.getMateriaById(idMateria);
+    }
+
+    @Override
+    public String eliminarMateria(Integer idMateria) throws MateriaNoExisteException {
+        return materiaDao.deleteMateria(idMateria);
     }
 
     private Integer cuatrimestreValido(Integer cuatrimestres, Integer cuatrimestresCarrera) throws CantidadCuatrimestresInvalidException {
