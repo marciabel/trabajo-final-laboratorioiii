@@ -27,7 +27,7 @@ public class MateriaController {
     }
 
     @PatchMapping("/{idMateria}")
-    public Materia modificarMateria(@PathVariable Integer idMateria, @RequestBody Map<String,Object> campos) {
+    public Materia modificarMateria(@PathVariable Integer idMateria, @RequestBody Map<String,Object> campos) throws CarreraNotFoundException {
         return materiaService.modificarMateria(idMateria, campos);
     }
 

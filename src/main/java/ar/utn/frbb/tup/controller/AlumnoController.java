@@ -26,13 +26,13 @@ public class AlumnoController {
     }
 
     @PatchMapping("/{idAlumno}")
-    public Alumno modificarAlumno(@PathVariable Integer idAlumno, @RequestBody Map<String,Object> campos) {
+    public Alumno modificarAlumno(@PathVariable Integer idAlumno, @RequestBody Map<String,Object> campos) throws AlumnoNoExisteException, ValorInvalidoException, CarreraNotFoundException {
         return alumnoService.modificarAlumno(idAlumno, campos);
     }
 
     @DeleteMapping("/{idAlumno}")
-    public void eliminarAlumno(@PathVariable Integer idAlumno) {
-        alumnoService.eliminarAlumno(idAlumno);
+    public String eliminarAlumno(@PathVariable Integer idAlumno) throws AlumnoNoExisteException {
+        return alumnoService.eliminarAlumno(idAlumno);
     }
 
     @PutMapping("/{idAlumno}/asignatura/{nombreAsignatura}")

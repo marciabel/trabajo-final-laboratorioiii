@@ -2,7 +2,6 @@ package ar.utn.frbb.tup.persistence.implementation;
 
 import ar.utn.frbb.tup.model.Alumno;
 import ar.utn.frbb.tup.model.Asignatura;
-import ar.utn.frbb.tup.model.Materia;
 import ar.utn.frbb.tup.persistence.AlumnoDao;
 import ar.utn.frbb.tup.persistence.exception.AlumnoAlreadyExistsException;
 import ar.utn.frbb.tup.persistence.exception.AlumnoNoExisteException;
@@ -40,5 +39,14 @@ public class AlumnoDaoImplementation implements AlumnoDao {
     @Override
     public List<Asignatura> getAsignaturasByStudent(Integer idAlumno) {
         return repositorioAlumnos.get(idAlumno).getAsignaturas();
+    }
+
+    @Override
+    public String deleteAlumno(Integer idAlumno) throws AlumnoNoExisteException {
+        if (!repositorioAlumnos.containsKey(idAlumno)) {
+            throw new AlumnoNoExisteException("El id ingresado no pertenece a ningun alumno");
+        }
+        repositorioAlumnos.remove(idAlumno);
+        return ("Alumno eliminado con exito");
     }
 }

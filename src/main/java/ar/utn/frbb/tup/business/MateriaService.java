@@ -17,7 +17,7 @@ public interface MateriaService {
 
     String eliminarMateria(Integer idMateria) throws MateriaNoExisteException;
 
-    Materia modificarMateria(Integer idMateria, Map<String, Object> campos);
+    Materia modificarMateria(Integer idMateria, Map<String, Object> campos) throws CarreraNotFoundException;
 
     List<Materia> buscarPorNombre(String nombre) throws MateriaNoExisteException;
 

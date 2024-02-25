@@ -47,18 +47,13 @@ public class MateriaServiceImplementation implements MateriaService {
 
         m.setNombre(validaciones.validarNombre(materiaDTO.getNombre()));
 
-        //-----------------------------------------//
-        /* Podría utilizar otro metodo u otro service que busque el profesor a partir del id*/
-
         materiaDTO.getIdPofesor().ifPresent(id -> {
             Profesor profesor = profesorService.getProfesorById(id);
             m.setProfesor(profesor);
         });
 
-        /*Lo mismo con la carrera*/
         Carrera carrera = carreraService.getCarreraById((materiaDTO.getIdCarrera()));
         m.setCarrera(carrera);
-        //-----------------------------------------//
 
         m.setAnio(validaciones.validarNumeroPositivo(materiaDTO.getAnio(), "Año"));
 
@@ -88,16 +83,16 @@ public class MateriaServiceImplementation implements MateriaService {
     }
 
     @Override
-    public Materia modificarMateria(Integer idMateria, Map<String, Object> atributos) {
+    public Materia modificarMateria(Integer idMateria, Map<String, Object> atributos) throws CarreraNotFoundException {
         Materia materia = materiaDao.getMateriaById(idMateria);
 
         for (Map.Entry<String, Object> atributo : atributos.entrySet()) {
             String nombreAtributo = atributo.getKey();
             Object valor = atributo.getValue();
-            //modificarAtributos(nombreAtributo, valor, carrera);
+            modificarAtributos(nombreAtributo, valor, materia);
         }
 
-        return null;
+        return materia;
     }
 
     @Override
@@ -144,6 +139,50 @@ public class MateriaServiceImplementation implements MateriaService {
     @Override
     public String eliminarMateria(Integer idMateria) throws MateriaNoExisteException {
         return materiaDao.deleteMateria(idMateria);
+    }
+
+    private void modificarAtributos(String nombreAtributo, Object value, Materia materia) throws CarreraNotFoundException {
+        switch (nombreAtributo){
+            case "nombre" -> {
+                if (value instanceof String) {
+                    materia.setNombre((String) value);
+                }
+            }
+            case "profesor" -> {
+                if (value instanceof Integer) {
+                    materia.setProfesor(new Profesor((Integer) value));
+                }
+            }
+            case "carrera" -> {
+                if (value instanceof Integer) {
+                    Carrera c = carreraService.getCarreraById((Integer) value);
+                    materia.setCarrera(c);
+                }
+            }
+            case "anio" -> {
+                if (value instanceof Integer) {
+                    materia.setAnio((Integer) value);
+                }
+            }
+            case "cuatrimestre" -> {
+                if (value instanceof Integer) {
+                    materia.setCuatrimestre((Integer) value);
+                }
+            }
+            case "correlatividades" -> {
+                if (value instanceof List) {
+                    agregarCorrelatividades(materia, (List<Integer>) value);
+                    System.out.println(materia);
+                }
+            }
+        }
+    }
+
+    private void agregarCorrelatividades(Materia materia, List<Integer> idsCorrelatividades) {
+        for (Integer idMateria: idsCorrelatividades) {
+            Materia m = materiaDao.getMateriaById(idMateria);
+            materia.getCorrelatividades().add(m);
+        }
     }
 
     private Integer cuatrimestreValido(Integer cuatrimestres, Integer cuatrimestresCarrera) throws CantidadCuatrimestresInvalidException {

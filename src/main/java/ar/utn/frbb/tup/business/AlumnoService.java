@@ -15,9 +15,9 @@ import java.util.Map;
 public interface AlumnoService {
     Alumno crearAlumno(AlumnoDto alumnoDTO) throws CarreraNotFoundException, ValorInvalidoException, AlumnoAlreadyExistsException;
 
-    Alumno modificarAlumno(Integer idAlumno, Map<String, Object> campos);
+    Alumno modificarAlumno(Integer idAlumno, Map<String, Object> campos) throws AlumnoNoExisteException, ValorInvalidoException, CarreraNotFoundException;
 
-    void eliminarAlumno(Integer idAlumno);
+    String eliminarAlumno(Integer idAlumno) throws AlumnoNoExisteException;
 
     Alumno cambiarEstadoAsignatura(Integer idAlumno, String nombreAsignatura, AsignaturaDTO nuevoEstado) throws NotaNoValidaException, EstadoNoValidoException, AlumnoNoExisteException;
 }

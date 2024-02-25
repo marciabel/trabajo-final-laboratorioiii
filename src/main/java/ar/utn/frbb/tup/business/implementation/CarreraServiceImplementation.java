@@ -27,7 +27,6 @@ public class CarreraServiceImplementation implements CarreraService {
     @Autowired
     MateriaDao materiaDAO;
 
-
     @Override
     public Carrera crearCarrera(CarreraDTO carreraDTO) throws CarreraAlreadyExistsException, CantidadCuatrimestresInvalidException, NombreInvalidoException, ValorInvalidoException {
 
@@ -56,8 +55,22 @@ public class CarreraServiceImplementation implements CarreraService {
         }
 
         carreraDao.updateCarrera(idCarrera, carrera);
-        System.out.println(carrera);
         return carrera;
+    }
+
+    @Override
+    public void agregarMateria(Carrera carrera, Materia materia) {
+        carreraDao.agregarMateriaACarrera(carrera, materia);
+    }
+
+    @Override
+    public String eliminarCarrera(Integer idCarrera) throws CarreraNotFoundException {
+        return carreraDao.deleteCarrera(idCarrera);
+    }
+
+    @Override
+    public Carrera getCarreraById(Integer idCarrera) throws CarreraNotFoundException {
+        return carreraDao.getCarrera(idCarrera);
     }
 
     public void modificarAtributos(String nombreAtributo, Object value, Carrera carrera) throws CantidadCuatrimestresInvalidException, NombreInvalidoException, ValorInvalidoException {
@@ -83,22 +96,16 @@ public class CarreraServiceImplementation implements CarreraService {
                 }
             }
         }
-
     }
 
-    @Override
-    public void agregarMateria(Carrera carrera, Materia materia) {
-        carreraDao.agregarMateriaACarrera(carrera, materia);
-    }
-
-    public void agregarMaterias(Carrera carrera, List<Integer> idMaterias) throws ValorInvalidoException {
+    private void agregarMaterias(Carrera carrera, List<Integer> idMaterias) throws ValorInvalidoException {
         for (Integer idMateria: idMaterias) {
             Materia m = materiaDAO.getMateriaById(idMateria);
             carrera.getMaterias().add(m);
         }
     }
 
-    public String validarNombre(String nombre) throws NombreInvalidoException {
+    private String validarNombre(String nombre) throws NombreInvalidoException {
         if (nombre == null) {
             throw new NombreInvalidoException("El nombre no puede ser un valor nulo");
         }
@@ -109,7 +116,7 @@ public class CarreraServiceImplementation implements CarreraService {
         return nombre;
     }
 
-    public Integer validarDepartamento (Integer departamento) throws ValorInvalidoException {
+    private Integer validarDepartamento (Integer departamento) throws ValorInvalidoException {
         if (departamento == null) {
             throw new ValorInvalidoException("El departamento no puede ser nulo.");
         }
@@ -119,7 +126,7 @@ public class CarreraServiceImplementation implements CarreraService {
         return departamento;
     }
 
-    public Integer validarCantidadCuatrimestres(Integer cuatrimestres) throws CantidadCuatrimestresInvalidException {
+    private Integer validarCantidadCuatrimestres(Integer cuatrimestres) throws CantidadCuatrimestresInvalidException {
         //En esta universidad ninguna carrera puede durar mas de 6 anios o 12 cuatrimestres
         if  (cuatrimestres == null) {
             throw new CantidadCuatrimestresInvalidException("Cantidad de cuatrimestres no puede ser nulo");
@@ -129,16 +136,4 @@ public class CarreraServiceImplementation implements CarreraService {
         }
         return cuatrimestres;
     }
-
-    @Override
-    public String eliminarCarrera(Integer idCarrera) throws CarreraNotFoundException {
-        return carreraDao.deleteCarrera(idCarrera);
-    }
-
-    @Override
-    public Carrera getCarreraById(Integer idCarrera) throws CarreraNotFoundException {
-        return carreraDao.getCarrera(idCarrera);
-    }
-
-
 }

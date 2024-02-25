@@ -50,7 +50,7 @@ public class Materia {
                 ", profesor=" + profesor +
                 ", anio=" + anio +
                 ", cuatrimestre=" + cuatrimestre +
-                ", correlatividades=" + correlatividades +
+                ", correlatividades=" + correlatividades.size() +
                 '}';
     }
 

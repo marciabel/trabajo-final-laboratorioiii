@@ -24,6 +24,10 @@ public class Profesor {
     public Profesor() {
     }
 
+    public Profesor(Integer idProfesor) {
+        this.idProfesor = idProfesor;
+    }
+
     @Override
     public int hashCode() {
         return idProfesor.hashCode();

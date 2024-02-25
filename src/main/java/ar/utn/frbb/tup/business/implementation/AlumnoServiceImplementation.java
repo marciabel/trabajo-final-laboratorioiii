@@ -1,9 +1,6 @@
 package ar.utn.frbb.tup.business.implementation;
 
-import ar.utn.frbb.tup.business.AlumnoService;
-import ar.utn.frbb.tup.business.AsignaturaService;
-import ar.utn.frbb.tup.business.CarreraService;
-import ar.utn.frbb.tup.business.Validaciones;
+import ar.utn.frbb.tup.business.*;
 import ar.utn.frbb.tup.business.exception.EstadoNoValidoException;
 import ar.utn.frbb.tup.business.exception.NotaNoValidaException;
 import ar.utn.frbb.tup.business.exception.ValorInvalidoException;
@@ -38,6 +35,9 @@ public class AlumnoServiceImplementation implements AlumnoService {
     CarreraService carreraService;
 
     @Autowired
+    MateriaService materiaService;
+
+    @Autowired
     Validaciones validaciones;
 
     @Override
@@ -57,13 +57,23 @@ public class AlumnoServiceImplementation implements AlumnoService {
     }
 
     @Override
-    public Alumno modificarAlumno(Integer idAlumno, Map<String, Object> campos) {
-        return null;
+    public Alumno modificarAlumno(Integer idAlumno, Map<String, Object> atributos) throws AlumnoNoExisteException, ValorInvalidoException, CarreraNotFoundException {
+        Alumno alumno = alumnoDao.getAlumnoById(idAlumno);
+
+        for (Map.Entry<String, Object> atributo : atributos.entrySet()) {
+            String nombreAtributo = atributo.getKey();
+            Object valor = atributo.getValue();
+            modificarAtributos(nombreAtributo, valor, alumno);
+        }
+
+        //alumnoDao.update(alumno);
+
+        return alumno;
     }
 
     @Override
-    public void eliminarAlumno(Integer idAlumno) {
-
+    public String eliminarAlumno(Integer idAlumno) throws AlumnoNoExisteException {
+        return alumnoDao.deleteAlumno(idAlumno);
     }
 
     @Override
@@ -78,18 +88,48 @@ public class AlumnoServiceImplementation implements AlumnoService {
                 asignatura.setNota(nuevoEstado.getNota());
             }
             return alumno;
-        } else {
-            // Manejar el caso donde el alumno o la asignatura no se encuentran
-            // Posiblemente lanzando una excepción personalizada
-            System.out.println("Tirar excepcionnnioofjliasdf--------------------");
-            System.out.println(idAlumno);
-            System.out.println(nombreAsignatura);
-            System.out.println(nuevoEstado);
-            System.out.println("-----------------------");
-            System.out.println(alumno);
-            System.out.println(asignatura);
         }
         return null;
+    }
+
+
+    private void modificarAtributos(String nombreAtributo, Object value, Alumno alumno) throws ValorInvalidoException, CarreraNotFoundException {
+        switch (nombreAtributo) {
+            case "nombre" -> {
+                if (value instanceof String) {
+                    alumno.setNombre((String) value);
+                }
+            }
+            case "apellido" -> {
+                if (value instanceof String) {
+                    alumno.setApellido((String) value);
+                }
+            }
+            case "dni" -> {
+                if (value instanceof Integer) {
+                    validaciones.validarNumeroPositivo((Integer) value, "DNI");
+                    alumno.setDni((Integer) value);
+                }
+            }
+            case "carrera" -> {
+                if (value instanceof Integer) {
+                    alumno.setCarrera(carreraService.getCarreraById((Integer) value));
+                }
+            }
+            case "asignaturas" -> {
+                if (value instanceof List) {
+                    agregarAsignaturas(alumno, (List<Integer>) value);
+                }
+            }
+        }
+    }
+
+    private void agregarAsignaturas(Alumno alumno, List<Integer> idMaterias) throws ValorInvalidoException {
+        for (Integer idMateria: idMaterias) {
+            Asignatura asignatura = new Asignatura();
+            asignatura.setMateria(materiaService.getMateriaById(idMateria));
+            alumno.getAsignaturas().add(asignatura);
+        }
     }
 
     private void validarNotaConEstado(AsignaturaDTO nuevoEstado) throws NotaNoValidaException, EstadoNoValidoException {

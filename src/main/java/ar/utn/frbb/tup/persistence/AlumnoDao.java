@@ -15,4 +15,6 @@ public interface AlumnoDao {
     Asignatura getAsignaturaByName(Integer idAlumno, String nombreAsignatura);
 
     List<Asignatura> getAsignaturasByStudent(Integer idAlumno);
+
+    String deleteAlumno(Integer idAlumno) throws AlumnoNoExisteException;
 }
