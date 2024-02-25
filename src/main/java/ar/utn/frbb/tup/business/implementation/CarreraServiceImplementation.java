@@ -81,6 +81,12 @@ public class CarreraServiceImplementation implements CarreraService {
 
     }
 
+    @Override
+    public void agregarMateria(Carrera carrera, Materia materia) {
+        carreraDao.agregarMateriaACarrera(carrera, materia);
+        System.out.println("AFTER ADDING THE MATERIA -----------------------");
+    }
+
     public void agregarMaterias(Carrera carrera, List<Materia> materias) {
         for (Materia materia: materias) {
             if (materia instanceof Materia) {

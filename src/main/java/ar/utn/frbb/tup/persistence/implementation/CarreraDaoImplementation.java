@@ -1,6 +1,7 @@
 package ar.utn.frbb.tup.persistence.implementation;
 
 import ar.utn.frbb.tup.model.Carrera;
+import ar.utn.frbb.tup.model.Materia;
 import ar.utn.frbb.tup.persistence.CarreraDao;
 import ar.utn.frbb.tup.persistence.exception.CarreraAlreadyExistsException;
 import ar.utn.frbb.tup.persistence.exception.CarreraNotFoundException;
@@ -15,8 +16,6 @@ import java.util.Map;
 public class CarreraDaoImplementation implements CarreraDao {
 
     private static final Map<Integer, Carrera> repositorioCarreras = new HashMap<>();
-
-    //private static final String FILE_PATH = "/src/main/java/ar.utn.frbb.tup/persistence/memory/repositorioCarreras.json";
 
     @Override
     public Carrera createCarrera(Carrera carrera) throws CarreraAlreadyExistsException {
@@ -55,6 +54,11 @@ public class CarreraDaoImplementation implements CarreraDao {
             throw new CarreraNotFoundException("No se encontró la carrera con el id " + idCarrera);
         }
         return true;
+    }
+
+    @Override
+    public void agregarMateriaACarrera(Carrera carrera, Materia materia) {
+        carrera.agregarMateria(materia);
     }
 
 

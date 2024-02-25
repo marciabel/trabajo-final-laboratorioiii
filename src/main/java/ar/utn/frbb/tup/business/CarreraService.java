@@ -20,7 +20,7 @@ public interface CarreraService {
 
     void modificarAtributos(String nombreAtributo, Object value, Carrera carrera) throws CantidadCuatrimestresInvalidException, NombreInvalidoException;
 
-    void agregarMaterias(Carrera carrera, List<Materia> materias);
+    void agregarMateria(Carrera carrera, Materia materia);
 
     void eliminarCarrera(Integer idCarrera) throws CarreraNotFoundException;
 

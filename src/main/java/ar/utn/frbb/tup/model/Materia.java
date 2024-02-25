@@ -1,5 +1,6 @@
 package ar.utn.frbb.tup.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public class Materia {
     private Carrera carrera;
     private Integer anio;
     private Integer cuatrimestre;
+    @JsonIgnore
     private List<Materia> correlatividades;
 
     public Materia(Integer materiaId, String nombre, Profesor profesor, Carrera carrera, Integer anio, Integer cuatrimestre, List<Materia> correlatividades) {
@@ -46,7 +48,6 @@ public class Materia {
                 "materiaId=" + materiaId +
                 ", nombre='" + nombre + '\'' +
                 ", profesor=" + profesor +
-                ", carrera=" + carrera +
                 ", anio=" + anio +
                 ", cuatrimestre=" + cuatrimestre +
                 ", correlatividades=" + correlatividades +

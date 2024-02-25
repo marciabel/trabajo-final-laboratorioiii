@@ -1,9 +1,11 @@
 package ar.utn.frbb.tup.persistence.implementation;
 
 import ar.utn.frbb.tup.model.Materia;
+import ar.utn.frbb.tup.persistence.CarreraDao;
 import ar.utn.frbb.tup.persistence.MateriaDao;
 import ar.utn.frbb.tup.persistence.exception.CarreraAlreadyExistsException;
 import ar.utn.frbb.tup.persistence.exception.MateriaAlreadyExistsException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -14,6 +16,9 @@ import java.util.Map;
 @Repository
 public class MateriaDaoImplementation implements MateriaDao {
 
+    @Autowired
+    CarreraDao carreraDao;
+
     private static final Map<Integer, Materia> repositorioMaterias = new HashMap<>();
 
     @Override
@@ -21,7 +26,11 @@ public class MateriaDaoImplementation implements MateriaDao {
         if (repositorioMaterias.containsKey(m.getMateriaId())) {
             throw new MateriaAlreadyExistsException("El id ingresado ya pertenece a otra materia");
         }
+
+        carreraDao.agregarMateriaACarrera(m.getCarrera(), m);
+
         repositorioMaterias.put(m.getMateriaId(), m);
+
         System.out.println(repositorioMaterias);
     }
 

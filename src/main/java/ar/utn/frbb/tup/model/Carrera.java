@@ -1,5 +1,6 @@
 package ar.utn.frbb.tup.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,8 @@ public class Carrera {
     private Integer idCarrera;
     private Integer departamento;
     private Integer cantidadCuatrimestres;
+
+    @JsonIgnore
     private List<Materia> materias;
 
     public Carrera(String nombre, Integer idCarrera, Integer departamento, Integer cantidadCuatrimestres, List<Materia> materias) {
@@ -46,13 +49,10 @@ public class Carrera {
                 ", idCarrera=" + idCarrera +
                 ", departamento=" + departamento +
                 ", cantidadCuatrimestres=" + cantidadCuatrimestres +
-                ", materias=" + materias +
                 '}';
     }
 
     public void agregarMateria(Materia materia) {
-        if (materia instanceof Materia) {
-            materias.add(materia);
-        }
+        materias.add(materia);
     }
 }
