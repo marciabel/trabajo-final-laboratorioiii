@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Repository
 public class AlumnoDaoImplementation implements AlumnoDao {
-    private static final Map<Integer, Alumno> repositorioAlumnos = new HashMap<>();
+    static final Map<Integer, Alumno> repositorioAlumnos = new HashMap<>();
     @Override
     public Alumno createAlumno(Alumno a) throws AlumnoAlreadyExistsException {
         if (repositorioAlumnos.containsKey(a.getIdAlumno())) {
@@ -29,11 +29,6 @@ public class AlumnoDaoImplementation implements AlumnoDao {
             throw new AlumnoNoExisteException("El id del alumno no existe");
         }
         return repositorioAlumnos.get(idAlumno);
-    }
-
-    @Override
-    public Asignatura getAsignaturaByName(Integer idAlumno, String nombreAsignatura) {
-        return null;
     }
 
     @Override

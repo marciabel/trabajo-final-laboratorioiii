@@ -31,8 +31,6 @@ public class MateriaDaoImplementation implements MateriaDao {
         carreraDao.agregarMateriaACarrera(m.getCarrera(), m);
 
         repositorioMaterias.put(m.getMateriaId(), m);
-
-        System.out.println(repositorioMaterias);
     }
 
     @Override
