@@ -93,7 +93,7 @@ public class ResponseCarreraExceptionHandler extends ResponseEntityExceptionHand
     }
 
     @ExceptionHandler (value = {NombreInvalidoException.class})
-    protected ResponseEntity<Object> handleNombreInvalido(
+    public ResponseEntity<Object> handleNombreInvalido(
             NombreInvalidoException ex, WebRequest request) {
         String exceptionMessage = ex.getMessage();
         CustomApiError error = new CustomApiError();

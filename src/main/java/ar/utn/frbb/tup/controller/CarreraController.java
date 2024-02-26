@@ -22,7 +22,6 @@ public class CarreraController {
     @PostMapping
     public Carrera crearCarrera(@RequestBody CarreraDTO carreraDTO) throws CarreraAlreadyExistsException, CantidadCuatrimestresInvalidException, NombreInvalidoException, ValorInvalidoException {
         Carrera c = carreraService.crearCarrera(carreraDTO);
-        System.out.println(c);
         return c;
     }
 
