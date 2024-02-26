@@ -2,7 +2,6 @@ package ar.utn.frbb.tup.controller;
 
 import ar.utn.frbb.tup.business.CarreraService;
 import ar.utn.frbb.tup.business.exception.NombreInvalidoException;
-import ar.utn.frbb.tup.controller.handler.ResponseCarreraExceptionHandler;
 import ar.utn.frbb.tup.dto.CarreraDTO;
 import ar.utn.frbb.tup.model.Carrera;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,14 +10,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,15 +23,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.http.RequestEntity.patch;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.ArgumentMatchers.any;
-
-
-
 
 @ExtendWith(SpringExtension.class)
 public class CarreraControllerTest {
@@ -103,9 +94,6 @@ public class CarreraControllerTest {
 
         // Verificar que el nombre del mensaje se manda correctamente
         assertEquals("Nombre invalido", exception.getMessage());
-
-        // Verificar que la respuesta tenga el estado BAD_REQUES
-        //assertEquals(HttpStatus.BAD_REQUEST, respuesta.getStatusCode());
     }
 
     @Test
